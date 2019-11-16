@@ -1,2 +1,2 @@
 
-this is a hello world program to print greeting message based on time test.
+this is the hello world program to print greeting message based on time test.
