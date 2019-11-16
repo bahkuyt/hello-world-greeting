@@ -2,19 +2,26 @@ pipeline {
     agent any
     stages {
         stage('Poll') {
-            sh 'mvn clean verify -DskipITs=true';
-            junit '**/target/surefire-reports/TEST-*.xml'
-            archive 'target/*.jar'
+            steps{
+                sh 'mvn clean verify -DskipITs=true';
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archive 'target/*.jar'
+            }
         }
         stage('Poll') {
-            sh 'mvn clean verify -DskipITs=true';
-            junit '**/target/surefire-reports/TEST-*.xml'
-            archive 'target/*.jar'
+            steps{
+                sh 'mvn clean verify -DskipITs=true';
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archive 'target/*.jar'
+            }
         }
         stage ('Integration Test'){
-            sh 'mvn clean verify -Dsurefire.skip=true';
-            junit '**/target/failsafe-reports/TEST-*.xml'
-            archive 'target/*.jar'
+            steps{
+                sh 'mvn clean verify -Dsurefire.skip=true';
+                junit '**/target/failsafe-reports/TEST-*.xml'
+                archive 'target/*.jar'
+            }
+            
         }
         stage ('Publish'){
             def server = Artifactory.server 'Default Artifactory Server'
@@ -27,7 +34,9 @@ pipeline {
                     }
                 ]
             }"""
-            server.upload(uploadSpec)
+            steps{
+                server.upload(uploadSpec)
+            }
         }        
     }
     post { 
