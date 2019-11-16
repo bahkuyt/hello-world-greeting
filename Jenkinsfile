@@ -3,12 +3,10 @@ pipeline {
     stages {
         stage('Poll') {
             steps{
-                sh 'mvn clean verify -DskipITs=true';
-                junit '**/target/surefire-reports/TEST-*.xml'
-                archive 'target/*.jar'
+                checkout scm
             }
         }
-        stage('Poll') {
+        stage('Build And Unit Test') {
             steps{
                 sh 'mvn clean verify -DskipITs=true';
                 junit '**/target/surefire-reports/TEST-*.xml'
